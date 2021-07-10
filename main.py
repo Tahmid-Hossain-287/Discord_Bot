@@ -6,7 +6,7 @@ intents.members = True
 bot = commands.Bot(command_prefix='!', intents=intents)
 
 version = (discord.__version__)
-# Learn about repr and print.
+# Remember to use repr when debugging using the print function.
 
 @bot.event
 async def on_ready():
@@ -14,6 +14,7 @@ async def on_ready():
 
 @bot.event
 async def on_message(message):
+	
 	if message.author == bot.user:
 		return 
 														
@@ -21,25 +22,15 @@ async def on_message(message):
 		await message.channel.send('Yo there!')
 
 	if message.content.startswith("!members"):
-		guild = bot.guilds[0]
-		members = guild.members
-		for _ in members:
-			await message.channel.send(repr(_))
-			# await message.channel.send(type(members))
-			# await message.channel.send(type(_))
-		# await message.channel.send((guild.members)[4])
-		# await message.channel.send(type((guild.members)[4]))
-		# for _ in members:
-		# 	await message.channel.send(_)
-		# 	await message.channel.send(type(_))
-
-		# await message.channel.send("Here are all the members of this server:")
-		# async for member in guild.fetch_members(limit=10000):
-		#     await message.channel.send(member.name)
-		# await message.channel.send("These are all the members of this server.")
-
-		
-
+		guild = bot.guilds[0] # Type is discord.guild.Guild.
+		members = guild.members # A list containing items of type discord.member.Member.
+		print(type(members))
+		for member in members:
+			await message.channel.send(member)
+			await message.channel.send(type(member))
+		# await message.channel.send(guild.owner)
+		# if message.author == guild.owner:
+		# 	await message.channel.send("The owner of this server has sent this message.")
 
 with open('token.txt', 'r') as text:
 	token = text.read()
